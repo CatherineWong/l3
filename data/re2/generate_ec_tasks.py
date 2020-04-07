@@ -55,9 +55,18 @@ def main():
         else:
             n_tasks = len(raw_split)
         
+        def convert_examples(examples):
+            # Convert to input/output list of characters.
+            def convert_example(x):
+                x = x[1:-1] # Remove < > tokens
+                return [c for c in x]
+            return [ (convert_example(x),
+                      convert_example(y))
+                     for x, y in examples]
+
         tasks = [   {
                     "name": f"re2_{split}_{i}",
-                    "examples": t["examples"]
+                    "examples": convert_examples(t["examples"])
                     } 
                 for (i, t) in enumerate(raw_split[:n_tasks])]
 
