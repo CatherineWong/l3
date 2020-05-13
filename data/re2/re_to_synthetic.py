@@ -20,13 +20,15 @@ def match_to_language_start(match):
         elif char == consonants:
             language += ["consonant"]
         elif char == chars:
-            language += ["letter"]
+            language += ["any letter"]
         else:
             language += [char]
-    return " followed by a ".join(language)
+    return " ".join(language)
 
 def match_to_language_after(after):
-    if not "\\" in after:
+    if len(after) < 1:
+        language = "remove that"
+    elif not "\\" in after:
         language = "replace that with "
         language += " ".join([c for c in after])
     else:
@@ -57,11 +59,11 @@ def generate_synthetic_language(regex):
     language = ""
     # Before
     if len(start) > 0:
-        language += f"if there is a {match_to_language_start(match)} at the start "
+        language += f"if the word starts with {match_to_language_start(match)} "
     elif len(end) > 0:
-        language += f"if there is a {match_to_language_start(match)} at the end "
+        language += f"if the word ends with {match_to_language_start(match)} "
     else:
-        language += f"if there is a {match_to_language_start(match)} "
+        language += f"if there is {match_to_language_start(match)} "
     
     language += match_to_language_after(after) 
     return language

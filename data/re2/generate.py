@@ -122,5 +122,5 @@ random.shuffle(data)
 
 dataset = data
 
-with open("data.json", "w") as data_f:
+with open("data_test.json", "w") as data_f:
     json.dump(dataset, data_f)
